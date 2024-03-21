@@ -5,7 +5,7 @@ from datetime import datetime
 
 # station_ids = ['ASHW1', 'ENCW1', 'FTAW1']
 
-station_ids = ['ASHW1']
+# station_ids = ['ASHW1']
 
 class WeatherDataLoader:
 
@@ -13,6 +13,8 @@ class WeatherDataLoader:
     bucket_name:str=None
     bucket:storage.Bucket=None
     credentials_file:str=None
+    station_list_file:str
+    station_ids:list=None
 
 
     def create_storage_client(self):
@@ -30,7 +32,7 @@ class WeatherDataLoader:
 
     def tick(self):
 
-        for station_id in station_ids:
+        for station_id in self.station_ids:
             # station specific url
             url = 'https://api.weather.gov/stations/' + station_id + '/observations/latest'
 
@@ -49,7 +51,7 @@ class WeatherDataLoader:
 
                     # based on the timestamp, determine the blob name
                     blob_name = self.generate_blob_name(station_id, timestamp_string)
-                    print('blob name is', blob_name)
+                    print(f'station {station_id}, timestamp is {timestamp_string}, blob name is {blob_name}')
 
                     # convert from dict to string as storage client can process string without
                     # us having to store it to local file then upload.
@@ -71,10 +73,10 @@ class WeatherDataLoader:
         # construct blob name in GCS
         blob_name = 'raw/{year}/{month}/{day}/{hour}_{minute}_{station_id}.json'.format(
             year=timestamp.year,
-            month=timestamp.month,
-            day=timestamp.day,
-            hour=timestamp.hour,
-            minute=timestamp.minute,
+            month=str(timestamp.month).zfill(2),
+            day=str(timestamp.day).zfill(2),
+            hour=str(timestamp.hour).zfill(2),
+            minute=str(timestamp.minute).zfill(2),
             station_id=station_id
             )
 
@@ -83,14 +85,23 @@ class WeatherDataLoader:
 
 
     def init(self):
+        self.station_ids = self.read_station_list()
         self.storage_client = self.create_storage_client()
         self.bucket = self.get_bucket()
+
+
+    def read_station_list(self):
+        with open(self.station_list_file) as file:
+            return [line.rstrip() for line in file]
+
 
 
 def main():
     loader=WeatherDataLoader()
     loader.credentials_file='./google_credential.json'
     loader.bucket_name='data-engineering-zoomcamp-2024-project'
+    loader.station_list_file='src/station_list.txt'
+
     loader.init()
     loader.tick()
 
