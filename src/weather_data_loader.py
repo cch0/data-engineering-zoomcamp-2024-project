@@ -3,9 +3,6 @@ import json
 from google.cloud import storage
 from datetime import datetime
 
-# station_ids = ['ASHW1', 'ENCW1', 'FTAW1']
-
-# station_ids = ['ASHW1']
 
 class WeatherDataLoader:
 
@@ -15,6 +12,10 @@ class WeatherDataLoader:
     credentials_file:str=None
     station_list_file:str
     station_ids:list=None
+
+    offic_ids = [
+        'AKQ','ALY','BGM','BOX','BTV','BUF','CAE','CAR','CHS','CLE','CTP','GSP','GYX','ILM','ILN','LWX','MHX','OKX','PBZ','PHI','RAH','RLX','RNK','ABQ','AMA','BMX','BRO','CRP','EPZ','EWX','FFC','FWD','HGX','HUN','JAN','JAX','KEY','LCH','LIX','LUB','LZK','MAF','MEG','MFL','MLB','MOB','MRX','OHX','OUN','SHV','SJT','SJU','TAE','TBW','TSA','ABR','APX','ARX','BIS','BOU','CYS','DDC','DLH','DMX','DTX','DVN','EAX','FGF','FSD','GID','GJT','GLD','GRB','GRR','ICT','ILX','IND','IWX','JKL','LBF','LMK','LOT','LSX','MKX','MPX','MQT','OAX','PAH','PUB','RIW','SGF','TOP','UNR','BOI','BYZ','EKA','FGZ','GGW','HNX','LKN','LOX','MFR','MSO','MTR','OTX','PDT','PIH','PQR','PSR','REV','SEW','SGX','SLC','STO','TFX','TWC','VEF','AER','AFC','AFG','AJK','ALU','GUM','HPA','HFO','PPG','STU','NH1','NH2','ONA','ONP'
+    ]
 
 
     def create_storage_client(self):
@@ -31,10 +32,11 @@ class WeatherDataLoader:
 
 
     def tick(self):
+        # for each office, first we retrieve a list of approved observation stations.
+        for office_id in self.offic_ids:
 
-        for station_id in self.station_ids:
-            # station specific url
-            url = 'https://api.weather.gov/stations/' + station_id + '/observations/latest'
+            # office specific url
+            url = 'https://api.weather.gov/offices/' + office_id
 
             # send request
             response = requests.get(url)
@@ -42,41 +44,58 @@ class WeatherDataLoader:
             # get the response in dict
             response_json: dict = response.json()
 
-            # we like to extract timestamp field which is in properties.timestamp field
-            if 'properties' in response_json:
-                properties = response_json['properties']
+            if 'approvedObservationStations' in response_json:
+                approvedObservationStations = response_json['approvedObservationStations']
 
-                if 'timestamp' in properties:
-                    timestamp_string = properties['timestamp']
+                for approvedObservationStation in approvedObservationStations:
+                    # extract station id and then retrieve latest data
+                    station_id = approvedObservationStation.replace('https://api.weather.gov/stations/','')
 
-                    # based on the timestamp, determine the blob name
-                    blob_name = self.generate_blob_name(station_id, timestamp_string)
-                    print(f'station {station_id}, timestamp is {timestamp_string}, blob name is {blob_name}')
+                    # station specific url
+                    url = 'https://api.weather.gov/stations/' + station_id + '/observations/latest'
 
-                    # convert from dict to string as storage client can process string without
-                    # us having to store it to local file then upload.
-                    content:str = json.dumps(response_json)
+                    # send request
+                    response = requests.get(url)
 
-                     # Upload the file to the bucket
-                    self.upload_to_bucket(content, blob_name)
-                else:
-                    print('No timestamp field found in the response for station', station_id)
-            else:
-                print('No properties field found in the response for station', station_id)
+                    # get the response in dict
+                    response_json: dict = response.json()
+
+                    # we like to extract timestamp field which is in properties.timestamp field
+                    if 'properties' in response_json:
+                        properties = response_json['properties']
+
+                        if 'timestamp' in properties:
+                            timestamp_string = properties['timestamp']
+
+                            # based on the timestamp, determine the blob name
+                            blob_name = self.generate_blob_name(office_id, station_id, timestamp_string)
+                            print(f'offic_id {office_id}, station_id {station_id}, timestamp is {timestamp_string}, blob name is {blob_name}')
+
+                            # convert from dict to string as storage client can process string without
+                            # us having to store it to local file then upload.
+                            content:str = json.dumps(response_json)
+
+                            # Upload the file to the bucket
+                            self.upload_to_bucket(content, blob_name)
+                        else:
+                            print(f'offic_id {office_id}, station_id {station_id}, no timestamp field found in the response')
+                    else:
+                        print(f'offic_id {office_id}, station_id {station_id}, no properties field found in the response')
 
 
-    def generate_blob_name(self, station_id: str, timestamp_string: str):
+    def generate_blob_name(self, office_id, station_id: str, timestamp_string: str):
         # example: 2024-03-21T11:07:00+00:00
         timestamp = datetime.strptime(timestamp_string, '%Y-%m-%dT%H:%M:%S%z')
         # print(type(timestamp))
 
         # construct blob name in GCS
-        blob_name = 'raw/{year}/{month}/{day}/{hour}_{minute}_{station_id}.json'.format(
+        blob_name = 'raw/{year}/{month}/{day}/{hour}_{minute}_{office_id}_{station_id}.json'.format(
             year=timestamp.year,
             month=str(timestamp.month).zfill(2),
             day=str(timestamp.day).zfill(2),
             hour=str(timestamp.hour).zfill(2),
             minute=str(timestamp.minute).zfill(2),
+            office_id=office_id,
             station_id=station_id
             )
 
