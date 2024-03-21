@@ -2,6 +2,8 @@ name: Fetch Data
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
 
 defaults:
   run:
@@ -29,7 +31,23 @@ jobs:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
 
-      - name: execute
+      - name: Install dependencies
         run: |
+          pip install -r src/requirements.txt
+
+
+      - name: execute
+        env:
+          SECRETS_VARS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        run: |
+          echo "$SECRETS_VARS" > google_credential.json
+          ls -l
           python src/weather_data_loader.py
+
+
+      - name: Clean up
+        if: always()
+        run: |
+          rm -f google_credential.json || true
+
 
