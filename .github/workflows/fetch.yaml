@@ -29,7 +29,19 @@ jobs:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
 
+      - name: Install dependencies
+        run: |
+          pip install -r src/requirements.txt
+
+
       - name: execute
         run: |
+          echo ${{ secrets.GOOGLE_CREDENTIALS }} >> google_credential.json
           python src/weather_data_loader.py
+
+
+      - name: Clean up
+        if: always()
+        run: |
+          rm -f google_credential.json || true
 
