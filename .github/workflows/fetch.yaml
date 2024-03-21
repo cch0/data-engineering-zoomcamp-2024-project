@@ -1,0 +1,35 @@
+name: Fetch Data
+
+on:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  on_schedule:
+    name: Scheduled Run
+
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        id: checkout-source
+
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+
+      - name: execute
+        run: |
+          python src/weather_data_loader.py
+
