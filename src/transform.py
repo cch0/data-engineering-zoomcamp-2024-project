@@ -17,7 +17,7 @@ class Transform:
                'windDirection', 'windSpeed', 'windGust', 'barometricPressure',
                'seaLevelPressure', 'visibility', 'maxTemperatureLast24Hours',
                'minTemperatureLast24Hours', 'precipitationLast3Hours', 'relativeHumidity',
-               'windChill', 'heatIndex']
+               'windChill', 'heatIndex', 'latitude', 'longitude']
 
 
     def create_storage_client(self):
@@ -28,13 +28,18 @@ class Transform:
         return self.storage_client.bucket(self.bucket_name)
 
 
-    def get_current_date_string(self):
+    def get_current_date_prefix(self):
         today = date.today()
         return today.strftime("%Y/%m/%d")
 
 
+    def get_current_date_string(self):
+        today = date.today()
+        return today.strftime("%Y-%m-%d")
+
+
     def get_blob_prefix(self):
-        return 'raw/' + self.get_current_date_string() + '/'
+        return 'raw/' + self.get_current_date_prefix() + '/'
 
 
     def get_value(self, source: dict, field:str, out: dict):
@@ -77,9 +82,16 @@ class Transform:
     def transform(self):
         prefix = self.get_blob_prefix()
 
+        transformed_list = []
+
         blobs = self.storage_client.list_blobs(self.bucket_name, prefix=prefix, delimiter='/')
         blob: Blob
+
+        count=0
+
         for blob in blobs:
+            count = count+1
+
             print(blob.name)
             json_obj = json.loads(blob.download_as_string())
 
@@ -90,11 +102,31 @@ class Transform:
                     station_id = self.extract_station_id(station_str)
 
                     transformed = self.transform_internal(station_id, json_obj['properties'])
+
+                    if 'geometry' in json_obj:
+                        transformed['latitude'] = json_obj['geometry']['coordinates'][1]
+                        transformed['longitude'] = json_obj['geometry']['coordinates'][0]
+
                     # print(transformed)
 
-                    df = pd.DataFrame([transformed])
+                    transformed_list.append(transformed)
 
-                    self.save_to_staging(blob.name, df)
+                    # df = pd.DataFrame([transformed])
+
+                    # df = pd.DataFrame(transformed_list)
+                    # self.save_to_staging(blob.name, df)
+
+        print(f'total files processed: {count}')
+        # print(transformed_list)
+        df = pd.DataFrame(transformed_list)
+        self.save_to_staging('daily/' + self.get_current_date_prefix() + '/'
+                             + self.get_current_date_string() + '.csv', df)
+
+
+    def save_to_daily(self, filename:str, df: pd.DataFrame):
+        blob = self.bucket.blob(filename)
+        blob.upload_from_string(df.to_csv(index=False), 'text/csv')
+
 
 
     def save_to_staging(self, json_file:str, df: pd.DataFrame):
