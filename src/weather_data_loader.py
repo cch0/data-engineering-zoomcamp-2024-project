@@ -32,7 +32,7 @@ class WeatherDataLoader:
         'GYX','ILM','ILN','LWX','MHX','OKX','PBZ','PHI','RAH','RLX','RNK','ABQ',
         'AMA','BMX','BRO','CRP','EPZ','EWX','FFC','FWD','HGX','HUN','JAN','JAX',
         'KEY','LCH','LIX','LUB','LZK','MAF','MEG','MFL','MLB','MOB','MRX','OHX'
-    ]    
+    ]
 
     def create_storage_client(self):
         return storage.Client.from_service_account_json(self.credentials_file)
