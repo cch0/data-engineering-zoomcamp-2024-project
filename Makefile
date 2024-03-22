@@ -30,6 +30,11 @@ fetch:
 	python src/weather_data_loader.py
 
 
+# transform data
+transform_raw:
+	python src/transform.py
+
+
 # build mage image
 mage_build:
 	cd $(MAGE_DIR) && docker compose build ; cd $(CURRENT_DIR)
