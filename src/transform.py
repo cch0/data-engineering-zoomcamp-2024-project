@@ -119,7 +119,7 @@ class Transform:
         print(f'total files processed: {count}')
         # print(transformed_list)
         df = pd.DataFrame(transformed_list)
-        self.save_to_staging('daily/' + self.get_current_date_prefix() + '/'
+        self.save_to_daily('daily/' + self.get_current_date_prefix() + '/'
                              + self.get_current_date_string() + '.csv', df)
 
 
