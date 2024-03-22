@@ -1,9 +1,9 @@
-name: Fetch Data
+name: Create Daily
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "50 23 * * *"
 
 defaults:
   run:
@@ -35,13 +35,12 @@ jobs:
         run: |
           pip install -r src/requirements.txt
 
-
-      - name: fetch raw data
+      - name: Create Daily data
         env:
           SECRETS_VARS: ${{ secrets.GOOGLE_CREDENTIALS }}
         run: |
           echo "$SECRETS_VARS" > google_credential.json
-          python src/weather_data_loader.py
+          python src/transform.py
 
 
       - name: Clean up
