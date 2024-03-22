@@ -128,6 +128,7 @@ class Transform:
         blob.upload_from_string(df.to_csv(index=False), 'text/csv')
 
 
+
     def save_to_staging(self, json_file:str, df: pd.DataFrame):
         csv_str = json_file.replace('.json', '.csv').replace('raw', 'staging')
 
