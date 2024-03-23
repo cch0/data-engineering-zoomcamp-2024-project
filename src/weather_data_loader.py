@@ -1,4 +1,6 @@
 import requests
+import traceback
+import logging
 import json
 from google.cloud import storage
 from datetime import datetime
@@ -70,11 +72,25 @@ class WeatherDataLoader:
                     # station specific url
                     url = 'https://api.weather.gov/stations/' + station_id + '/observations/latest'
 
+                    print(f'Calling {url}')
+
                     # send request
                     response = requests.get(url)
 
+                    if response is None:
+                        continue
+
                     # get the response in dict
-                    response_json: dict = response.json()
+                    try:
+                        response_json: dict = response.json()
+                    except Exception as e:
+                        print(f'Error reading json')
+                        logging.error(traceback.format_exc())
+                        continue
+
+
+                    if response_json is None:
+                        continue
 
                     # we like to extract timestamp field which is in properties.timestamp field
                     if 'properties' in response_json:

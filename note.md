@@ -1,4 +1,17 @@
 
+# gcp service account permission
+
+
+![alt text](./gcp_service_account_permissions.png
+
+
+```
+BigQuery Data Editor
+BigQuery Job User
+BigQuery User
+Storage Admin
+```
+
 #
 
 make tf_plan output
@@ -238,6 +251,20 @@ make mage_down
 
 
 
+
+
+# ###
+
+bigquery sql to check for duplicate rows
+
+with record_count as (
+  SELECT stationId, date, hour, minute, count(*) as count
+  FROM `axial-gist-411121.project_dataset.table1`
+  group by stationId, date, hour, minute
+)
+select *
+from record_count
+where count > 1
 
 
 
