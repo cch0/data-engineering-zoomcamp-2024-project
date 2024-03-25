@@ -80,6 +80,7 @@ class Transform:
 
 
     def transform(self):
+        print(f'Current date" {self.get_current_date_prefix()}')
         prefix = self.get_blob_prefix()
 
         transformed_list = []
@@ -119,9 +120,9 @@ class Transform:
         print(f'total files processed: {count}')
         # print(transformed_list)
         df = pd.DataFrame(transformed_list)
-
-        self.save_to_daily('daily/' + self.get_current_date_prefix() + '/'
-                             + self.get_current_date_string() + '.csv', df)
+        daily_csv_file_name = 'daily/' + self.get_current_date_prefix() + '/' + self.get_current_date_string() + '.csv'
+        print(f'Daily file name: {daily_csv_file_name}')
+        self.save_to_daily(daily_csv_file_name, df)
 
 
     def save_to_daily(self, filename:str, df: pd.DataFrame):

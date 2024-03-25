@@ -74,22 +74,25 @@ class WeatherDataLoader:
 
                     print(f'Calling {url}')
 
-                    # send request
-                    response = requests.get(url)
+                    response_json: dict = None
 
-                    if response is None:
-                        continue
-
-                    # get the response in dict
                     try:
-                        response_json: dict = response.json()
+                        # send request
+                        response = requests.get(url)
+
+                        if response is None:
+                            print('response is None, skipping')
+                            continue
+
+                        # get the response in dict
+                        response_json = response.json()
                     except Exception as e:
-                        print(f'Error reading json')
+                        print(f'Error retrieving data, url: {url}')
                         logging.error(traceback.format_exc())
                         continue
 
-
                     if response_json is None:
+                        print('response_json is None, skipping')
                         continue
 
                     # we like to extract timestamp field which is in properties.timestamp field
