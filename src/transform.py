@@ -82,6 +82,8 @@ class Transform:
     def transform(self):
         print(f'Current date" {self.get_current_date_prefix()}')
 
+        # daily aggregate job starts before midnight so we determine the daily file name first
+        # in case the job takes longer and goes into the next day
         daily_csv_file_name = 'daily/' + self.get_current_date_prefix() + '/' + self.get_current_date_string() + '.csv'
         print(f'Daily file name: {daily_csv_file_name}')
 
