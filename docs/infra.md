@@ -137,7 +137,9 @@ This command executes the `terraform apply` command to actually create resources
 make tf_apply
 ```
 
+<br>
 
+Output:
 
 <!-- <details>
   <summary>Click me</summary> -->
