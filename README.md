@@ -1,4 +1,4 @@
-# Data engineering Zoomcamp 2024 project
+# Data Engineering Zoomcamp 2024 Project
 
 ## Overview
 

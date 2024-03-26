@@ -1,0 +1,108 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - cleaning_and_add__transform
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: ingest from cloud storage
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: ingest_from_cloud_storage
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - remove_duplicates
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: cleaning and add  transform
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - ingest_from_cloud_storage
+  uuid: cleaning_and_add__transform
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - read_back_from_bigquery_and_assert_no_dupes
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: store to big query
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - remove_duplicates
+  uuid: store_to_big_query
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: read back from bigquery and assert no dupes
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks:
+  - store_to_big_query
+  uuid: read_back_from_bigquery_and_assert_no_dupes
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - store_to_big_query
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: remove duplicates
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - cleaning_and_add__transform
+  uuid: remove_duplicates
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-03-22 13:44:11.566127+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: local_python
+extensions: {}
+name: colossal lake
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: colossal_lake
+variables_dir: /home/src/mage_data/data-engineering-zoomcamp-2024-project
+widgets: []

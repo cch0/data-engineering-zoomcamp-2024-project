@@ -1,0 +1,12 @@
+triggers:
+- envs: []
+  last_enabled_at: 2024-03-25 16:57:31.383527
+  name: dauntless charm
+  pipeline_uuid: colossal_lake
+  schedule_interval: '@once'
+  schedule_type: time
+  settings: null
+  sla: null
+  start_time: 2024-03-24 16:57:00
+  status: inactive
+  variables: {}
