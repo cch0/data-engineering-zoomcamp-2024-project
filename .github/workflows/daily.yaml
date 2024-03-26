@@ -2,6 +2,12 @@ name: Create Daily
 
 on:
   workflow_dispatch:
+    inputs:
+      EXECUTION_DATE:
+        description: 'processing date'
+        required: false
+        type: string
+
   schedule:
     - cron: "50 23 * * *"
 
@@ -35,9 +41,17 @@ jobs:
         run: |
           pip install -r src/requirements.txt
 
+
+      - name: Echo
+        run: |
+          echo "EXECUTION_DATE is ${{ inputs.EXECUTION_DATE }}"
+          echo "EXECUTION_DATE=${{ inputs.EXECUTION_DATE }}" >> "$GITHUB_ENV"
+
+
       - name: Create Daily data
         env:
           SECRETS_VARS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          EXECUTION_DATE: ${{ inputs.EXECUTION_DATE }}
         run: |
           echo "$SECRETS_VARS" > google_credential.json
           python src/transform.py

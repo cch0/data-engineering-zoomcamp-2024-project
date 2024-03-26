@@ -2,6 +2,8 @@ import json
 import pandas as pd
 import logging
 import traceback
+import os
+from datetime import datetime
 from google.cloud import storage
 from datetime import date
 from google.cloud.storage import Blob
@@ -12,6 +14,8 @@ class Transform:
     bucket_name:str=None
     bucket:storage.Bucket=None
     credentials_file:str=None
+    execution_date_string:str=None
+    execution_date:date=None
 
     columns = [ 'stationId', 'timestamp', 'temperature', 'dewpoint',
                'windDirection', 'windSpeed', 'windGust', 'barometricPressure',
@@ -28,14 +32,23 @@ class Transform:
         return self.storage_client.bucket(self.bucket_name)
 
 
+    def get_execution_date(self):
+        self.execution_date_string = os.getenv('execution_date')
+
+        if not self.execution_date_string:
+            print(f'execution_date environment variable is not available, use current date')
+            self.execution_date = date.today()
+        else:
+            print(f'converting execution_date environment variable: {self.execution_date_string}')
+            self.execution_date = datetime.strptime(self.execution_date_string, '%Y-%m-%d').date()
+
+
     def get_current_date_prefix(self):
-        today = date.today()
-        return today.strftime("%Y/%m/%d")
+        return self.execution_date.strftime("%Y/%m/%d")
 
 
     def get_current_date_string(self):
-        today = date.today()
-        return today.strftime("%Y-%m-%d")
+        return self.execution_date.strftime("%Y-%m-%d")
 
 
     def get_blob_prefix(self):
@@ -80,7 +93,7 @@ class Transform:
 
 
     def transform(self):
-        print(f'Current date" {self.get_current_date_prefix()}')
+        print(f'Current date: {self.get_current_date_prefix()}')
 
         # daily aggregate job starts before midnight so we determine the daily file name first
         # in case the job takes longer and goes into the next day
@@ -163,6 +176,7 @@ def main():
 
 
     transformer.init()
+    transformer.get_execution_date()
     transformer.transform()
 
 
