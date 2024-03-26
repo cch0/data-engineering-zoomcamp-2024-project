@@ -2,6 +2,8 @@
 
 ## Overview
 
+
+
 ### Data Visualization
 
 ![data visualization 01](./docs/data_visualization_01.png)
@@ -23,6 +25,14 @@
 
 
 ## Prerequisites
+
+**Infrastructure Provisioning**
+
+[infrastructure](./docs/infra.md)
+
+**Docker Container Creation**
+
+[mage](./docs/mage.md)
 
 
 ## How to Run This Project

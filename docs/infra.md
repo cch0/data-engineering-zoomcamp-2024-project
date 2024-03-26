@@ -2,13 +2,13 @@
 
 ## Overview
 
-The Goggle Cloud Storage bucket and Big Query dataset needed for this project are provisioned by Terraform.
+The Google Cloud Storage bucket and Big Query dataset needed for this project are provisioned by Terraform.
 
 ## Prerequisites
 
 - GCP Project
 - Terraform
-- GCP IAM service account with the following permissions
+- GCP IAM Service Account with the following permissions
     - BigQuery Data Editor
     - BigQuery Job User
     - BigQuery User
@@ -21,8 +21,6 @@ The Goggle Cloud Storage bucket and Big Query dataset needed for this project ar
 ## Provisioning Steps
 
 **Step 0**
-
-Description:
 
 Terraform needs GCP credential in order to provision resources. The credential file location is specified in [variables.tf](../terraform/variables.tf)
 
@@ -41,8 +39,6 @@ variable "credentials" {
 
 **Step 1**
 
-Description:
-
 This step initializes the directory and ready for running Terraform command.
 
 
@@ -55,9 +51,8 @@ make tf_init
 
 **Step 2**
 
-Description:
 
-This command executes the `terraform plan` command and give us a overview of resources that will be created.
+This command executes the `terraform plan` command and give us an overview of resources that will be created.
 
 
 ```bash
@@ -135,7 +130,7 @@ Plan: 2 to add, 0 to change, 0 to destroy.
 
 **Step 3**
 
-Description:
+This command executes the `terraform apply` command to actually create resources.
 
 
 ```bash
@@ -222,5 +217,24 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 <br>
 
+**Result**
 
+- A GCP bucket called `data-engineering-zoomcamp-2024-project` has been created.
+
+<br>
+
+![cloud storage bucket](./cloud_storage.png)
+
+
+- A BigQuery dataset called `project_dataset` has been created.
+
+<br>
+
+![big query dataset](./big_query.png)
+
+<br>
+
+
+
+<br>
 
