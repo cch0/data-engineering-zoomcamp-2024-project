@@ -61,9 +61,6 @@ make tf_plan
 
 <br>
 
-<details>
-  <summary>Click me</summary>
-
 
 ```text
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
@@ -123,7 +120,7 @@ Plan: 2 to add, 0 to change, 0 to destroy.
 
 ```
 
-</details>
+
 
 
 <br>
@@ -141,8 +138,6 @@ make tf_apply
 
 Output:
 
-<details>
-  <summary>Click me</summary>
 
 ```text
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
@@ -215,7 +210,6 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 ```
 
-</details>
 
 <br>
 
