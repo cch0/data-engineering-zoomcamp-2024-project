@@ -65,8 +65,7 @@ make tf_plan
   <summary>Click me</summary>
 
 
-```
-
+```text
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
@@ -143,8 +142,7 @@ make tf_apply
 <details>
   <summary>Click me</summary>
 
-```
-
+```text
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
