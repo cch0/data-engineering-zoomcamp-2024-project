@@ -270,7 +270,8 @@ where count > 1
 
 # ###
 
-![gif](./docs/0325.drawio2.svg)
+![data architectures](./docs/data_architecture.svg)
+
 
 
 <br>

@@ -1,5 +1,7 @@
 import json
 import pandas as pd
+import logging
+import traceback
 from google.cloud import storage
 from datetime import date
 from google.cloud.storage import Blob
@@ -98,7 +100,14 @@ class Transform:
             count = count+1
 
             print(blob.name)
-            json_obj = json.loads(blob.download_as_string())
+            json_obj = {}
+
+            try:
+                json_obj = json.loads(blob.download_as_string())
+            except Exception as e:
+                print(f'Error retrieving blob: {blob.name}')
+                logging.error(traceback.format_exc())
+                continue
 
             if 'properties' in json_obj:
                 if 'station' in json_obj['properties']:
