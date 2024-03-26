@@ -33,7 +33,7 @@ class Transform:
 
 
     def get_execution_date(self):
-        self.execution_date_string = os.getenv('execution_date')
+        self.execution_date_string = os.getenv('EXECUTION_DATE')
 
         if not self.execution_date_string:
             print(f'execution_date environment variable is not available, use current date')
