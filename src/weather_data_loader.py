@@ -111,7 +111,13 @@ class WeatherDataLoader:
                             content:str = json.dumps(response_json)
 
                             # Upload the file to the bucket
-                            self.upload_to_bucket(content, blob_name)
+                            try :
+                                self.upload_to_bucket(content, blob_name)
+                            except Exception as e:
+                                print(f'Error uploading data, blob_name: {blob_name}')
+                                logging.error(traceback.format_exc())
+                                continue
+
                         else:
                             print(f'offic_id {office_id}, station_id {station_id}, no timestamp field found in the response')
                     else:
