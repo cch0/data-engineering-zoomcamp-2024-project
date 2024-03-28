@@ -16,7 +16,7 @@ The goal of this project is to create a solution which consists an end-to-end da
 
 **National Weather Service**'s [API Web Service](https://www.weather.gov/documentation/services-web-api#/default/radar_station) provides various APIs where we can use to collect real time weather data.
 
-A list of office ids were previously obtained and hard-coded in the data collection Python script (see [weather_data_load.py](src/weather_data_loader.py))
+A list of office ids were previously obtained and hard-coded in the data collection Python script (see [weather_data_load.py](./src/weather_data_loader.py))
 
 For each office, we retrieve a list of weather station ids and for each station the Python script makes an API call to obtain current weather data.
 
@@ -76,21 +76,15 @@ Before we can execute the pipeline, we would first provision the infrastructure.
 This includes building Cloud Storage bucket and BigQuery dataset using Terraform.
 
 
-<br>
-
 [infrastructure](./docs/infra.md)
 
-<br>
 
 **Docker Container Creation**
 
 This includes building local Mage image as well as running Mage and Postgres containers.
 
-<br>
 
 [mage](./docs/mage.md)
-
-<br>
 
 
 
