@@ -15,11 +15,15 @@ The first place is where we create daily report csv file using Github Pipeline. 
 
 In the following example, the processing data is `2024-03-25`.
 
+<br>
+
 ![github backfill](./github_backfill.png)
 
 <br>
 
-When pipeline job finished, we can see the csv file landed on GCP Cloud Storage under prefix `daily/2024/03/25`.
+When pipeline job finished, we can see the csv file landed on GCP Cloud Storage bucket under prefix `daily/2024/03/25`.
+
+<br>
 
 ![github backfill 2](./github_backfill2.png)
 
@@ -29,7 +33,9 @@ When pipeline job finished, we can see the csv file landed on GCP Cloud Storage 
 
 The second place is where we ingest daily csv file into Mage pipeline's Data Loader job called `ingest from cloud storage`.
 
-In the following example, both start and end date and time are set to `2024-03-25` to backfill the previous day which is `2024-03-24`.
+In the following example, both Start and End date and time are set to `2024-03-25` to backfill the previous day which is `2024-03-24`.
+
+<br>
 
 
 ![mage backfill 1](./mage_backfill1.png)
@@ -65,10 +71,7 @@ Backfill finished successfully
 
 <br>
 
-![mage backfill 5](./mage_backfill4.png)
+![mage backfill 5](./mage_backfill5.png)
 
 
 <br>
-
-
-
