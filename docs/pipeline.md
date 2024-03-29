@@ -1,12 +1,15 @@
 # Data Pipeline
 
+## Overview
+
+This document describes the pipelines and triggers implemented for this project.
 
 The end-to-end data batch processing pipeline consists of two pieces.
 
 The first pipeline piece is created by using Github Pipeline and second piece is created by using Mage pipeline.
 
 
-### Github Pipelines
+## Github Pipelines
 
 There are two Github pipeline jobs created for this project.
 
@@ -43,7 +46,7 @@ For each execution date, one single csv file will be created and uploaded back t
 
 <br>
 
-### Mage Pipelines
+## Mage Pipelines
 
 Mage pipeline consists of total 5 blocks
 
@@ -108,7 +111,7 @@ This data exporter uploads the dataframe to BigQuery dataset called `project_dat
 
 **5. read back from bigquery and assert no dupes** Data Loader
 
-See [quality check](../mage/data-engineering-zoomcamp-2024-project/data_exporters/store_to_big_query.py)
+See [quality check](../mage/data-engineering-zoomcamp-2024-project/data_loaders/read_back_from_bigquery_and_assert_no_dupes.py)
 
 
 ![mage block 5](./mage_block_5.png)
@@ -116,7 +119,7 @@ See [quality check](../mage/data-engineering-zoomcamp-2024-project/data_exporter
 
 <br>
 
-**Pipeline Trigger**
+## Mage Pipeline Trigger
 
 A daily scheduled trigger is created to execute the pipeline. Trigger can also be triggered manually.
 

@@ -2,6 +2,8 @@
 
 ## Overview
 
+This document describes the infrastructure provisioning for this project.
+
 The Google Cloud Storage bucket and Big Query dataset needed for this project are provisioned by Terraform.
 
 ## Prerequisites

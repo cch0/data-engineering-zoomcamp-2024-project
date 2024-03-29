@@ -1,5 +1,7 @@
 # Backfill
 
+This document descirbes the backfill process implemented for this project.
+
 Backfill is a way to "fill the gap" where data is either missing, corrupt or arriving late.
 
 There are two places in the data pipeline where we can apply backfilling.
