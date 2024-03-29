@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains the source code and documentation for the [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)'s project for 2024.
+This [repository](https://github.com/cch0/data-engineering-zoomcamp-2024-project) contains the source code and documentation for the [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)'s project for 2024.
 
 <br>
 
@@ -34,9 +34,9 @@ Instead of using existing historical data, this project is going to collect data
 
 The final result is a **Weather Reports** Looker report.
 
-The first page shows the summary statistics. User can select either or both **Station ID** and **Date**.
+The first page of the report shows the summary statistics. User can select either or both **Station ID** and **Date**.
 
-The first dashboard shows the number of records collected for the selected station and date.
+The first dashboard in this page shows the number of records collected for the selected station and date.
 
 The second dashboard shows the lowest, average and highest temperature for the selected station and date.
 
@@ -46,7 +46,7 @@ The second dashboard shows the lowest, average and highest temperature for the s
 
 <br>
 
-Second page shows the time series temperate data for the selected station and the date range.
+Second page of the report shows the time series temperate data for the selected station and the date range.
 
 <br>
 
@@ -68,7 +68,7 @@ Second page shows the time series temperate data for the selected station and th
 
 <br>
 
-[data pipelines](./docs/pipeline.md)
+See [data pipelines](./docs/pipeline.md)
 
 <br>
 
