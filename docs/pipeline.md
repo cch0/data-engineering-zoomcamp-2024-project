@@ -114,6 +114,9 @@ This data exporter uploads the dataframe to BigQuery dataset called `project_dat
 See [quality check](../mage/data-engineering-zoomcamp-2024-project/data_loaders/read_back_from_bigquery_and_assert_no_dupes.py)
 
 
+This data loader performs quality check by reading data from BigQuery table and make sure there is no duplicate rows in the table based on the same unique criteria described in **remove duplicates** transformer.
+
+
 ![mage block 5](./mage_block_5.png)
 
 
@@ -122,8 +125,6 @@ See [quality check](../mage/data-engineering-zoomcamp-2024-project/data_loaders/
 ## Mage Pipeline Trigger
 
 A daily scheduled trigger is created to execute the pipeline. Trigger can also be triggered manually.
-
-This data loader performs quality check by reading data from BigQuery table and make sure there is no duplicate rows in the table based on the same unique criteria described in **remove duplicates** transformer.
 
 
 ![mage trigger](./mage_trigger.png)
