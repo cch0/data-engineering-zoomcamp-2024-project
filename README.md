@@ -93,13 +93,22 @@ This includes building local Mage image as well as running Mage and Postgres con
 
 [mage](./docs/mage.md)
 
-
+<br>
 
 ## Lessons Learned
 
 - Backfill is an important part of the design. Have to take this into consideration when designing the pipeline.
 - Deciding on data visualization earlier helps narrowing down the scope and the kind of processing needed for the pipeline. Working backward from the target end state is a useful way to keep things in check.
 - Documentation would probably takes as much time as development.
+
+
+<br>
+
+## How Is This Website Made?
+
+This website is powered by [Github Page](https://pages.github.com/).
+
+The theme is configured in [_config.yaml](./_config.yaml) file.
 
 
 <br>
