@@ -60,10 +60,17 @@ Second page shows the time series temperate data for the selected station and th
 
 <br>
 
-![data architectures](./docs/data_architecture.svg)
+![data flow](./docs/data_flow.svg)
 
 <br>
 
+## Data Pipelines
+
+<br>
+
+[data pipelines](./docs/pipeline.md)
+
+<br>
 
 
 
@@ -91,8 +98,8 @@ This includes building local Mage image as well as running Mage and Postgres con
 ## Lessons Learned
 
 - Backfill is an important part of the design. Have to take this into consideration when designing the pipeline.
-- Deciding on Data visualization earlier helps narrowing down the scope and the kind of processing needed for the pipeline. Working backward from the target end state is a useful way to keep things in check.
-- Documentation would probably takes as much time as development .
+- Deciding on data visualization earlier helps narrowing down the scope and the kind of processing needed for the pipeline. Working backward from the target end state is a useful way to keep things in check.
+- Documentation would probably takes as much time as development.
 
 
 <br>
