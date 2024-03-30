@@ -4,7 +4,7 @@
 
 This [repository](https://github.com/cch0/data-engineering-zoomcamp-2024-project) contains the source code and documentation for the [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)'s project for 2024.
 
-The content in the README is also available on https://cch0.github.io/data-engineering-zoomcamp-2024-project/
+The content in the README is also available on [https://cch0.github.io/data-engineering-zoomcamp-2024-project/](https://cch0.github.io/data-engineering-zoomcamp-2024-project/)
 
 <br>
 
