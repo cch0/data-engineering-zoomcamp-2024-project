@@ -8,8 +8,8 @@ on:
         required: false
         type: string
 
-  schedule:
-    - cron: "50 23 * * *"
+  # schedule:
+  #   - cron: "50 23 * * *"
 
 defaults:
   run:
